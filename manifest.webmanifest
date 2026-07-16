@@ -1,0 +1,17 @@
+{
+  "name": "스매시프렌즈 운영",
+  "short_name": "스매시프렌즈",
+  "description": "회원·참석·자동 대진·점수·랭킹을 기기 하나로 운영합니다. 인터넷 없이 동작합니다.",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef1ee",
+  "theme_color": "#12564a",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
