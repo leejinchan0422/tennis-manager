@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tennis Club Manager</title>
+<style>
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+  }
+  .box { padding: 32px; }
+  h1 { font-size: 32px; margin: 0 0 8px; }
+  .sub { color: #9a9a9a; font-size: 16px; margin-bottom: 32px; }
+  .card {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+  }
+  .ok { color: #4ade80; font-size: 18px; margin-bottom: 16px; }
+  .info { color: #9a9a9a; font-size: 14px; line-height: 1.8; text-align: left; }
+  .time { color: #6a6a6a; font-size: 13px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>🎾 Tennis Club Manager</h1>
+  <div class="sub">테니스클럽 운영 시스템</div>
+  <div class="card">
+    <div class="ok">✅ 1단계 완료</div>
+    <div class="info">
+      · GitHub 저장소 생성됨<br>
+      · 첫 화면 배포됨<br>
+      · 인터넷에서 접속 가능<br>
+      · 다음 단계: 회원관리
+    </div>
+    <div class="time" id="now"></div>
+  </div>
+</div>
+<script>
+  document.getElementById('now').textContent =
+    '현재 시각 ' + new Date().toLocaleString('ko-KR');
+</script>
+</body>
+</html>
