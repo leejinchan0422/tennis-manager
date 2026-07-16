@@ -1,0 +1,1149 @@
+/*
+  ui.css — 화면 전체 디자인 (반응형)
+  · 특정 기기 전용이 아닙니다. 태블릿 / 폰 / PC / Mac 어디서 열어도 같은 화면입니다.
+  · 우선순위: ① 태블릿 가로(현장 운영) ② 폰 ③ PC
+  · 웹폰트를 쓰지 않습니다. 인터넷이 없어도 글씨가 똑같이 보여야 하므로 기기 내장 폰트만 씁니다.
+  · 누르는 것은 최소 52px(폰 48px). 코트 옆에서 서서 눌러야 합니다.
+  · 색은 하드코트(짙은 초록)와 코트 라인(흰색)에서 가져왔습니다.
+
+  화면 크기 구분
+    기본        ~599px    폰 (한 줄씩)
+    ≥600px                태블릿 세로 / 폰 가로
+    ≥900px                태블릿 가로 ★ 현장 운영 기준
+    ≥1280px               PC · Mac
+*/
+
+:root {
+  --court: #12564a;
+  --court-dark: #0c3d34;
+  --paper: #eef1ee;
+  --card: #ffffff;
+  --ink: #14201c;
+  --muted: #6b7a74;
+  --line: #d9e0dc;
+  --male: #1d4f6c;
+  --female: #7a2e52;
+  --alert: #a5352c;
+  --ok: #2e7d5b;
+  --warn: #8a6d1f;
+
+  --pad: 12px;      /* 화면 바깥 여백 — 폰 기준. 아래 미디어쿼리에서 커집니다 */
+  --gap: 10px;      /* 카드 사이 간격 */
+  --tap: 48px;      /* 누르는 것 최소 크기 */
+  --shell: 1000px;  /* 본문 최대 너비 */
+  --title: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', system-ui, 'Malgun Gothic', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tcm-shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  /* 노치·둥근 모서리 있는 폰에서 글자가 잘리지 않게 */
+  padding: 0 max(var(--pad), env(safe-area-inset-right)) calc(48px + env(safe-area-inset-bottom))
+    max(var(--pad), env(safe-area-inset-left));
+}
+
+/* ── 탭 ─────────────────────────────── */
+.tcm-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  padding: calc(8px + env(safe-area-inset-top)) 0 8px;
+  margin: 0 calc(var(--pad) * -1);
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tcm-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.tcm-nav button {
+  flex: none;
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tcm-nav button[aria-current='true'] {
+  background: var(--court);
+  border-color: var(--court);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── 공통 ────────────────────────────── */
+.tcm-head {
+  background: var(--court);
+  color: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tcm-title {
+  margin: 0;
+  font-size: var(--title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.tcm-sub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tcm-counts {
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+}
+
+.tcm-count {
+  text-align: right;
+}
+
+.tcm-count b {
+  display: block;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tcm-count span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tcm-hint {
+  margin: 10px 0 0;
+  padding-left: 4px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.tcm-hint--alert {
+  color: var(--alert);
+}
+
+.tcm-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 14px;
+}
+
+.tcm-section-title {
+  margin: 22px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tcm-input {
+  flex: 1 1 200px;
+  min-height: var(--tap);
+  padding: 0 14px;
+  font-size: 17px; /* 16px 미만이면 입력할 때 아이패드가 화면을 확대해 버립니다 */
+  font-family: inherit;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tcm-input:focus-visible,
+.tcm-btn:focus-visible,
+.tcm-seg button:focus-visible,
+.tcm-nav button:focus-visible,
+.tcm-chip:focus-visible {
+  outline: 3px solid var(--court);
+  outline-offset: 2px;
+}
+
+.tcm-seg {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.tcm-seg button {
+  min-height: var(--tap);
+  min-width: 58px;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 17px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tcm-seg button + button {
+  border-left: 1px solid var(--line);
+}
+
+.tcm-seg button[aria-pressed='true'] {
+  background: var(--court);
+  color: #fff;
+  font-weight: 600;
+}
+
+.tcm-btn {
+  min-height: var(--tap);
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tcm-btn[disabled] {
+  opacity: 0.45;
+}
+
+.tcm-btn--primary {
+  background: var(--court);
+  border-color: var(--court);
+  color: #fff;
+  font-weight: 600;
+}
+
+.tcm-btn--primary:active {
+  background: var(--court-dark);
+}
+
+.tcm-btn--danger {
+  color: var(--alert);
+  border-color: #e3c9c6;
+}
+
+.tcm-btn--small {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 15px;
+}
+
+.tcm-error {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 14px;
+  color: var(--alert);
+}
+
+.tcm-tools {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tcm-tools .tcm-input {
+  flex: 1 1 160px;
+}
+
+.tcm-spacer {
+  flex: 1 1 auto;
+}
+
+.tcm-badge {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tcm-badge--M {
+  background: var(--male);
+}
+
+.tcm-badge--F {
+  background: var(--female);
+}
+
+.tcm-tag {
+  flex: none;
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.tcm-tag--mixed {
+  color: var(--warn);
+  border-color: #e6d7a8;
+  background: #fdf8e8;
+}
+
+.tcm-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.tcm-foot {
+  margin: 22px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ── 명단 ────────────────────────────── */
+.tcm-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.tcm-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  min-height: 64px;
+}
+
+.tcm-row + .tcm-row {
+  border-top: 1px solid var(--line);
+}
+
+.tcm-row--resting {
+  background: #f7f8f7;
+}
+
+.tcm-row--resting .tcm-name {
+  color: var(--muted);
+}
+
+.tcm-row--editing {
+  background: #fbfdfb;
+  flex-wrap: wrap;
+}
+
+.tcm-row--editing .tcm-input {
+  flex: 1 1 160px;
+}
+
+.tcm-name {
+  flex: 1 1 auto;
+  font-size: 18px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tcm-actions {
+  display: flex;
+  gap: 8px;
+  flex: none;
+}
+
+/* ── 참석 체크 ───────────────────────── */
+.tcm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tcm-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: max(var(--tap), 52px);
+  padding: 0 16px 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.tcm-chip[aria-pressed='true'] {
+  border-color: var(--court);
+  background: #e7f0ec;
+  font-weight: 600;
+}
+
+.tcm-chip[aria-pressed='true'] .tcm-check {
+  background: var(--court);
+  color: #fff;
+  border-color: var(--court);
+}
+
+.tcm-check {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: transparent;
+}
+
+/* ── 후보안 ──────────────────────────── */
+.tcm-cands {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tcm-cand {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tcm-cand--best {
+  border-color: var(--court);
+  border-width: 2px;
+}
+
+.tcm-cand--chosen {
+  background: #e7f0ec;
+  border-color: var(--court);
+  border-width: 2px;
+}
+
+.tcm-cand-score {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tcm-cand-score small {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.tcm-cand-reason {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  flex: 1 1 auto;
+}
+
+/* ── 품질 리포트 ─────────────────────── */
+.tcm-report {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.tcm-report dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tcm-report dd {
+  margin: 4px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── 대진표 ──────────────────────────── */
+.tcm-round {
+  margin-top: 18px;
+}
+
+.tcm-round-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 4px 8px;
+}
+
+.tcm-round-head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.tcm-round-head span {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tcm-round--now .tcm-round-head h3 {
+  color: var(--court);
+}
+
+.tcm-courts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 12px;
+}
+
+.tcm-match {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.tcm-match--now {
+  border-color: var(--court);
+  border-width: 2px;
+}
+
+.tcm-match--done {
+  background: #f7f9f8;
+}
+
+.tcm-match-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tcm-match-head b {
+  font-size: 14px;
+}
+
+.tcm-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.tcm-team-names {
+  flex: 1 1 auto;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.tcm-team--win .tcm-team-names {
+  font-weight: 700;
+}
+
+.tcm-vs {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 2px 0;
+}
+
+.tcm-score {
+  width: 64px;
+  min-height: max(var(--tap), 52px);
+  flex: none;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  -moz-appearance: textfield;
+}
+
+.tcm-score::-webkit-outer-spin-button,
+.tcm-score::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tcm-swap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+.tcm-select {
+  min-height: 44px;
+  font-family: inherit;
+  font-size: 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 8px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.tcm-rest {
+  margin: 10px 4px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── 랭킹 ────────────────────────────── */
+.tcm-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.tcm-table th,
+.tcm-table td {
+  padding: 12px 10px;
+  text-align: right;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid var(--line);
+}
+
+.tcm-table th {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  background: #f7f9f8;
+}
+
+.tcm-table td:nth-child(1),
+.tcm-table th:nth-child(1) {
+  text-align: center;
+  width: 48px;
+  font-weight: 600;
+}
+
+.tcm-table td:nth-child(2),
+.tcm-table th:nth-child(2) {
+  text-align: left;
+  font-size: 17px;
+}
+
+.tcm-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ── 대시보드 ────────────────────────── */
+.tcm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tcm-stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.tcm-stat b {
+  display: block;
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tcm-stat span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.tcm-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.tcm-bar i {
+  display: block;
+  height: 100%;
+  background: var(--court);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ── 가로 스크롤 상자 (폰에서 표가 잘리지 않도록) ── */
+.tcm-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(var(--pad) * -1);
+  padding: 0 var(--pad);
+}
+
+.tcm-scroll .tcm-table {
+  min-width: 560px;
+}
+
+/* ── 설치 안내 ─────────────────────── */
+.tcm-install {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+
+.tcm-install p {
+  margin: 0;
+  flex: 1 1 240px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ══ 폰 (기본 ~599px) ══════════════════ */
+@media (max-width: 599px) {
+  .tcm-count b {
+    font-size: 30px;
+  }
+  .tcm-counts {
+    gap: 16px;
+  }
+  .tcm-name {
+    font-size: 17px;
+  }
+  /* 폰에서는 이름과 버튼이 한 줄에 안 들어갑니다 */
+  .tcm-row {
+    flex-wrap: wrap;
+  }
+  .tcm-actions {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+  }
+  .tcm-team-names {
+    font-size: 16px;
+  }
+}
+
+/* ══ 태블릿 세로 · 폰 가로 (≥600px) ═════ */
+@media (min-width: 600px) {
+  :root {
+    --pad: 16px;
+    --gap: 12px;
+    --tap: 52px;
+    --title: 19px;
+  }
+}
+
+/* ══ 태블릿 가로 ★ 현장 운영 기준 (≥900px) ══ */
+@media (min-width: 900px) {
+  :root {
+    --pad: 20px;
+    --gap: 14px;
+    --title: 22px;
+  }
+  .tcm-head {
+    padding: 20px 24px;
+  }
+  .tcm-count b {
+    font-size: 42px;
+  }
+  /* 두 코트를 반드시 나란히 (현장에서 고개 안 돌리고 한눈에) */
+  .tcm-courts {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  }
+  .tcm-team-names {
+    font-size: 19px;
+  }
+  .tcm-score {
+    width: 76px;
+    font-size: 24px;
+  }
+  .tcm-scroll {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* ══ PC · Mac (≥1280px) ════════════════ */
+@media (min-width: 1280px) {
+  :root {
+    --shell: 1280px;
+    --pad: 24px;
+    --gap: 16px;
+  }
+  .tcm-nav {
+    padding-top: 12px;
+  }
+  /* 마우스로 쓰는 화면이라 대진 카드를 3열까지 펼칩니다 */
+  .tcm-courts {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  }
+}
+
+/* ── 마우스가 있는 기기에서만 hover ── */
+@media (hover: hover) and (pointer: fine) {
+  .tcm-btn:hover,
+  .tcm-nav button:hover,
+  .tcm-chip:hover {
+    border-color: var(--court);
+  }
+  .tcm-btn--primary:hover {
+    background: var(--court-dark);
+  }
+  .tcm-cand:hover {
+    border-color: var(--court);
+  }
+  .tcm-row:hover {
+    background: #fbfcfb;
+  }
+}
+
+/* ── 홈 화면에 설치해서 열었을 때 (주소창 없음) ── */
+@media (display-mode: standalone) {
+  .tcm-nav {
+    padding-top: calc(12px + env(safe-area-inset-top));
+  }
+}
+
+/* ── 인쇄: 대진표를 종이로 뽑아 코트에 붙이는 경우 ── */
+@media print {
+  .tcm-nav,
+  .tcm-tools,
+  .tcm-install,
+  .tcm-foot {
+    display: none !important;
+  }
+  .tcm-head {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+  .tcm-sub,
+  .tcm-count span {
+    color: #333;
+  }
+  .tcm-match {
+    break-inside: avoid;
+  }
+}
+
+/* 지난 운영일 목록 — 줄 전체가 눌리는 버튼 */
+.tcm-row-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* ══ REQ-ADMIN-001: 관리자 ↔ 현장 공개 분리 ══════════ */
+
+/* 관리자 화면 표시 — 이 화면이 운영진용임을 항상 알 수 있게 */
+.tcm-admin-mark {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.tcm-nav-open {
+  flex: none;
+  border-color: var(--court) !important;
+  color: var(--court) !important;
+  font-weight: 600;
+}
+
+/* 공개 반영 안내 줄 */
+.tcm-publish {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 14px;
+  border: 2px solid var(--court);
+  border-radius: 14px;
+  background: #e7f0ec;
+}
+
+.tcm-publish p {
+  margin: 0;
+  flex: 1 1 240px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* 현장 공개 화면 — 코트 옆에서 멀리서도 보이게 크게 */
+.tcm-shell--display {
+  max-width: 1400px;
+}
+
+.tcm-display .tcm-title {
+  font-size: calc(var(--title) + 6px);
+}
+
+.tcm-match--big {
+  padding: 20px;
+}
+
+.tcm-match--big .tcm-team-names {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.tcm-match--big .tcm-score {
+  width: 92px;
+  min-height: 68px;
+  font-size: 30px;
+}
+
+.tcm-match--big .tcm-match-head b {
+  font-size: 18px;
+}
+
+/* 확정된 점수 — 고치려면 '점수 수정'을 눌러야 함 */
+.tcm-score--locked {
+  display: grid;
+  place-items: center;
+  background: #f2f5f3;
+  color: var(--ink);
+  border-style: dashed;
+}
+
+/* 순위 카드 */
+.tcm-top {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.tcm-top li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 18px;
+}
+
+.tcm-top li + li {
+  border-top: 1px solid var(--line);
+}
+
+.tcm-top li b {
+  color: var(--court);
+  font-size: 15px;
+  min-width: 34px;
+}
+
+.tcm-top li span {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* 눈에 띄지 않는 링크 (현장 화면에서 관리 화면으로) */
+.tcm-quiet {
+  border: 0;
+  background: none;
+  padding: 4px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+  .tcm-match--big .tcm-team-names {
+    font-size: 30px;
+  }
+  .tcm-display .tcm-count b {
+    font-size: 52px;
+  }
+}
+
+/* 새 버전 알림 (BUG-002) */
+.tcm-update {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 calc(var(--pad) * -1) 8px;
+  padding: 12px var(--pad);
+  background: var(--court);
+  color: #fff;
+}
+
+.tcm-update p {
+  margin: 0;
+  flex: 1 1 200px;
+  font-size: 14px;
+}
+
+.tcm-update .tcm-btn {
+  background: #fff;
+  color: var(--court);
+  border-color: #fff;
+}
+
+/* 게스트 표시 — 공개 화면에는 이 'G' 딱지만 나갑니다 (지각·귀가 시간 등 내부정보는 비공개) */
+.tcm-g {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  margin-left: 6px;
+  border-radius: 5px;
+  background: var(--warn);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.tcm-timelabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tcm-timelabel .tcm-select {
+  min-height: 44px;
+}
+
+/* 동기화 상태 표시 */
+.tcm-sync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 calc(var(--pad) * -1) 0;
+  padding: 8px var(--pad);
+  background: #e7f0ec;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tcm-sync--off {
+  background: #fdf8e8;
+}
+
+.tcm-sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex: none;
+}
+
+.tcm-sync--off .tcm-sync-dot {
+  background: var(--warn);
+}
+
+.tcm-sync-text {
+  font-variant-numeric: tabular-nums;
+}
+
+.tcm-sync-msg {
+  flex: 1 1 100%;
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.tcm-publish--live {
+  background: var(--court);
+  border-color: var(--court);
+  color: #fff;
+}
+
+.tcm-publish--live .tcm-btn {
+  border-color: rgba(255, 255, 255, 0.5);
+}
