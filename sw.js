@@ -8,7 +8,7 @@
         나중에 '새 버전이 있습니다 → 새로고침' 안내 UI를 붙일 자리입니다.
 */
 
-const CACHE = 'tcm-v0.19.0';
+const CACHE = 'tcm-v0.27.0';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
